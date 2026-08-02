@@ -49,12 +49,18 @@ def img_to_b64(path: Path) -> str:
     return base64.b64encode(path.read_bytes()).decode()
 
 
-LOGO_B64 = img_to_b64(ASSETS / "logo_crop.png")
+LOGO_B64 = img_to_b64(ASSETS / "logo_3d.png")
 QR_B64 = img_to_b64(ASSETS / "qr_code.png")
 
 # ----------------------------------------------------------------------------
-# Global CSS
+# Global CSS — dark espresso theme
 # ----------------------------------------------------------------------------
+BG_DARK_1 = "#241407"
+BG_DARK_2 = "#3A2414"
+CARD_BG = "#FBF4E4"
+TEXT_LIGHT = "#F1E6CE"
+TEXT_MUTED = "#D8C4A0"
+
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
@@ -63,46 +69,57 @@ html, body, [class*="css"] {{
     font-family: 'Cairo', sans-serif;
     direction: rtl;
 }}
-.stApp {{ background: linear-gradient(180deg, {CREAM_LIGHT} 0%, {CREAM} 100%); }}
+.stApp {{ background: linear-gradient(160deg, {BG_DARK_1} 0%, {BG_DARK_2} 100%); }}
 
-section[data-testid="stSidebar"] {{ background-color: {BROWN}; }}
-section[data-testid="stSidebar"] * {{ color: {CREAM_LIGHT} !important; }}
+section[data-testid="stSidebar"] {{ background-color: {BG_DARK_1}; border-left: 1px solid {TERRACOTTA}33; }}
+section[data-testid="stSidebar"] * {{ color: {TEXT_LIGHT} !important; }}
 
-h1, h2, h3 {{ color: {BROWN} !important; font-weight: 800 !important; }}
+h1, h2, h3 {{ color: {TEXT_LIGHT} !important; font-weight: 800 !important; }}
+p, span, label, .stMarkdown, .stCaption {{ color: {TEXT_MUTED}; }}
 
-.hero {{ display:flex; align-items:center; justify-content:center; gap:24px; padding:18px 0 8px 0; text-align:center; }}
-.hero img {{ height:110px; }}
-.hero-title {{ font-size:2.4rem; font-weight:800; color:{BROWN}; margin:0; }}
-.hero-sub {{ font-size:1.05rem; color:{BROWN_SOFT}; margin-top:-6px; }}
+.hero {{ display:flex; align-items:center; justify-content:center; gap:24px; padding:22px 0 12px 0; text-align:center; }}
+.hero img {{ height:130px; filter: drop-shadow(0 10px 18px rgba(0,0,0,0.45)); }}
+.hero-title {{ font-size:2.5rem; font-weight:800; color:{TEXT_LIGHT}; margin:0; }}
+.hero-sub {{ font-size:1.05rem; color:{TERRACOTTA}; margin-top:-6px; }}
 
-.risk-card {{ border-radius:16px; padding:22px 26px; margin-top:14px; border:2px solid; }}
+.risk-card {{ border-radius:16px; padding:22px 26px; margin-top:14px; border:2px solid; background:{CARD_BG}; }}
 .override-badge {{
     display:inline-block; margin-top:10px; padding:4px 12px; border-radius:8px;
     background:#fff3cd; color:#7a5b00; font-size:0.85rem; border:1px solid #ffe08a;
 }}
 
 .metric-card {{
-    background:white; border-radius:14px; padding:16px 18px; text-align:center;
-    box-shadow:0 2px 10px rgba(61,38,23,0.08); border:1px solid {TERRACOTTA}33;
+    background:{CARD_BG}; border-radius:14px; padding:16px 18px; text-align:center;
+    box-shadow:0 4px 16px rgba(0,0,0,0.35); border:1px solid {TERRACOTTA}55;
 }}
 .metric-card .num {{ font-size:1.9rem; font-weight:800; color:{BROWN}; }}
 .metric-card .lbl {{ font-size:0.85rem; color:{BROWN_SOFT}; }}
 
 .evidence-item {{
-    background:white; border-radius:10px; padding:10px 14px; margin-bottom:8px;
+    background:{CARD_BG}; border-radius:10px; padding:10px 14px; margin-bottom:8px;
     border-right:4px solid {TERRACOTTA}; font-size:0.92rem; color:{BROWN};
 }}
 
 .stButton>button {{
     background:{TERRACOTTA}; color:white; font-weight:700; border-radius:10px;
     border:none; padding:10px 26px; font-size:1.05rem;
+    box-shadow:0 4px 12px rgba(0,0,0,0.35);
 }}
-.stButton>button:hover {{ background:{BROWN}; color:{CREAM}; }}
+.stButton>button:hover {{ background:#e08e52; color:{BG_DARK_1}; }}
 
 .timeline-step {{
-    background:white; border-radius:12px; padding:14px 18px; margin-bottom:10px;
-    border-right:5px solid {TERRACOTTA}; box-shadow:0 1px 6px rgba(61,38,23,0.06);
+    background:{CARD_BG}; border-radius:12px; padding:14px 18px; margin-bottom:10px;
+    border-right:5px solid {TERRACOTTA}; box-shadow:0 3px 10px rgba(0,0,0,0.3); color:{BROWN};
 }}
+.timeline-step b {{ color:{BROWN}; }}
+
+[data-testid="stTextArea"] textarea, [data-testid="stTextInput"] input {{
+    background:{CARD_BG} !important; color:{BROWN} !important; border-radius:10px !important;
+}}
+[data-baseweb="select"] {{ border-radius:10px !important; }}
+
+.stAlert {{ border-radius:12px; }}
+
 footer, #MainMenu {{visibility:hidden;}}
 </style>
 """, unsafe_allow_html=True)
